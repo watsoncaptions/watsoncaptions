@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <script src="/socket.io/socket.io.js"></script>
+     <meta name="generator" content="IBM Northstar Template Generator 1.1" />
+    <title>Watson Speech to Text</title>
+    <script>
+    var reqData= {};
+    (function() {
+    		 function getQueryVariable(variable) {
+    	  	 	 var query = window.location.search.substring(1);
+    	  	 	 var vars = query.split("&");
+    	  	 	 for (var i=0;i<vars.length;i++) {
+    	  	   		 var pair = vars[i].split("=");
+    	  	   		 if (pair[0] == variable) {
+    	  	   			 console.log("value: "+pair[1]);
+    	  	     		 return pair[1];
+    	  	    	}
+    	  		  } 
+    	  	 	 console.log('Query Variable ' + variable + ' not found');
+    	  		}
+    	      
+    		 reqData.streamId = getQueryVariable('event');
+    		 reqData.delay = getQueryVariable('delay');
+    		 
+    	     var socket = io.connect('/speechsocket');
+    	     console.log("delay::"+getQueryVariable('delay'),";;;",getQueryVariable('event'));
+    	     socket.emit('sendMessage',reqData);
+        
+    	     socket.on('message', function(data){
+    	         console.log('Retun data::',data);
+    	         document.getElementsByTagName("BODY")[0].innerHTML+= data;  
+    	         scrollDown()
+    	     });
+    	     socket.on('disconnect', function(data){
+    	           console.log('disconnect');
+    	         socket.disconnect(); 
+    	    });
+    	    
+    	})();
+    
+      function scrollDown(){
+    	  console.log('scrollDown invoked!')
+    	  window.scrollTo(0,document.body.scrollHeight);
+    	  //document.getElementsByTagName("BODY")[0].scrollTop=document.getElementsByTagName("BODY")[0].scrollHeight
+      }
+   
+    </script>
+ </head>
+ <body>
+ 	<!--  <div id ="displayText"></div> -->
+ </body>
+ 
+
+          <!--   <div id="f1">
+         
+              <iframe id="stFrame1" src="/player?event=stream11&delay=5000"  style="height: 115px; width: 640px; background-color: black; color:white;" scrolling="no"  frameborder="0" margin="1px">
+                </iframe>
+            </div> -->
+    
+    <!-- <iframe id="stFrame1" src="https://watsoncaptionw3suresh1.w3ibm.mybluemix.net/player?event=stream2&delay=5000"  style="height: 115px; width: 640px; background-color: black; color:white;" scrolling="no"  frameborder="0" margin="1px"></iframe>
+     </div>  -->
+ <!--    <div id="f2">
+         
+               <iframe id="stFrame2" src="/player?event=stream2&delay=10000"  style="height: 115px; width: 640px; background-color: black; color:white;" scrolling="no"  frameborder="0" margin="1px">
+                </iframe>
+            </div>
+     <div id="f3">
+         
+               <iframe id="stFrame3" src="/player?event=stream2&delay=10000"  style="height: 115px; width: 640px; background-color: black; color:white;" scrolling="no"  frameborder="0" margin="1px">
+                </iframe>
+            </div>
+     <div id="f4">
+         
+               <iframe id="stFrame4" src="/player?event=stream2&delay=10000"  style="height: 115px; width: 640px; background-color: black; color:white;" scrolling="no"  frameborder="0" margin="1px">
+                </iframe>
+            </div>-->
+                <!--<div style="color:#FF0000; font-weight:bold; float: left">Stream 1</div>
+-->
+
+</html>
