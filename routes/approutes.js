@@ -68,7 +68,7 @@ module.exports = function (app,io) {
 			console.log(JSON.stringify(data, null, 2));
 			clearInterval(timeInterval);
 			socket.disconnect(); 
-			['data', 'results', 'error', 'close-connection'].forEach(function(eventName) {
+			['data', 'results'].forEach(function(eventName) {
 				if(watsonConnections[streamId]!=null && watsonStrmLstnrs[eventName] !=null) 
 					watsonConnections[streamId].recognizeStream.removeListener(eventName,watsonStrmLstnrs[eventName]);
 			});
